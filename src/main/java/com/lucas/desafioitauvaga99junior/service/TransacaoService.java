@@ -2,7 +2,6 @@ package com.lucas.desafioitauvaga99junior.service;
 
 import com.lucas.desafioitauvaga99junior.dto.TransacaoDTO;
 import com.lucas.desafioitauvaga99junior.entity.Transacao;
-import com.lucas.desafioitauvaga99junior.exception.RegraNegocioException;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
@@ -21,19 +20,11 @@ public class TransacaoService {
     }
 
     public void criar (TransacaoDTO dto) {
-        validarTransacao(dto);
         Transacao transacao = new Transacao(dto.valor(), dto.dataHora());
         transacoes.add(transacao);
     }
 
     public void deletar() {
         transacoes.clear();
-    }
-
-    private void validarTransacao(TransacaoDTO dto) {
-        OffsetDateTime now = OffsetDateTime.now();
-        if (dto.dataHora().isAfter(now)) {
-            throw new RegraNegocioException("A data da transação não pode ser no futuro");
-        }
     }
 }
