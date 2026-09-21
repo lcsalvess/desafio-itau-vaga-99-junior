@@ -18,8 +18,9 @@ public class EstatisticaService {
         this.transacaoService = transacaoService;
     }
 
-    public EstatisticaDTO calcularEstatisticas() {
-        List<Transacao> transacoes = transacaoService.buscarTransacoes(INTERVALO_PADRAO_SEGUNDOS);
+    public EstatisticaDTO calcularEstatisticas(Integer intervalo) {
+        int intervaloSegundos = intervalo != null ? intervalo : INTERVALO_PADRAO_SEGUNDOS;
+        List<Transacao> transacoes = transacaoService.buscarTransacoes(intervaloSegundos);
         if (transacoes.isEmpty()) {
             return EstatisticaDTO.vazio();
         }

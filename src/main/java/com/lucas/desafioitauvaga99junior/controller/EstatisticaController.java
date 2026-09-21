@@ -2,11 +2,9 @@ package com.lucas.desafioitauvaga99junior.controller;
 
 import com.lucas.desafioitauvaga99junior.dto.EstatisticaDTO;
 import com.lucas.desafioitauvaga99junior.service.EstatisticaService;
+import jakarta.validation.constraints.Positive;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/estatistica")
@@ -20,7 +18,11 @@ public class EstatisticaController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public EstatisticaDTO buscarEstatisticas() {
-        return estatisticaService.calcularEstatisticas();
+    public EstatisticaDTO buscarEstatisticas(
+            @RequestParam(required = false)
+            @Positive
+            Integer intervalo
+    ) {
+        return estatisticaService.calcularEstatisticas(intervalo);
     }
 }
