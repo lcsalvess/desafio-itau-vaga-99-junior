@@ -22,4 +22,9 @@ public class TransacaoController {
         transacaoService.criar(dto);
     }
 
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void deletar() {
+        transacaoService.deletar();
+    }
 }
