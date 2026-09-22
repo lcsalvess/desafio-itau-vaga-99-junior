@@ -2,6 +2,8 @@ package com.lucas.desafioitauvaga99junior.service;
 
 import com.lucas.desafioitauvaga99junior.dto.EstatisticaDTO;
 import com.lucas.desafioitauvaga99junior.model.Transacao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +12,9 @@ import java.util.List;
 
 @Service
 public class EstatisticaService {
+    private static final Logger log = LoggerFactory.getLogger(EstatisticaService.class);
 
-    @Value("${estatistica.intervalo-padrao-segundos")
+    @Value("${estatistica.intervalo-padrao-segundos}")
     private int intervaloPadraoSegundos;
 
     private final TransacaoService transacaoService;
@@ -23,6 +26,11 @@ public class EstatisticaService {
     public EstatisticaDTO calcularEstatisticas(Integer intervalo) {
         int intervaloSegundos = intervalo != null ? intervalo : intervaloPadraoSegundos;
         List<Transacao> transacoes = transacaoService.buscarTransacoes(intervaloSegundos);
+
+        log.info("Estatísticas calculadas: intervalo={}s, transações={}",
+                intervaloSegundos,
+                transacoes.size());
+
         if (transacoes.isEmpty()) {
             return EstatisticaDTO.vazio();
         }
