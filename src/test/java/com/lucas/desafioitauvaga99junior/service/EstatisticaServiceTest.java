@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -30,6 +31,7 @@ public class EstatisticaServiceTest {
     @BeforeEach
     void setUp() {
         agora = OffsetDateTime.now();
+        ReflectionTestUtils.setField(estatisticaService, "intervaloPadraoSegundos", INTERVALO_PADRAO_SEGUNDOS);
     }
 
     @Nested

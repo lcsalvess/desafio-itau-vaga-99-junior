@@ -2,6 +2,7 @@ package com.lucas.desafioitauvaga99junior.service;
 
 import com.lucas.desafioitauvaga99junior.dto.EstatisticaDTO;
 import com.lucas.desafioitauvaga99junior.model.Transacao;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.DoubleSummaryStatistics;
@@ -10,7 +11,8 @@ import java.util.List;
 @Service
 public class EstatisticaService {
 
-    private static final int INTERVALO_PADRAO_SEGUNDOS = 60;
+    @Value("${estatistica.intervalo-padrao-segundos")
+    private int intervaloPadraoSegundos;
 
     private final TransacaoService transacaoService;
 
@@ -19,7 +21,7 @@ public class EstatisticaService {
     }
 
     public EstatisticaDTO calcularEstatisticas(Integer intervalo) {
-        int intervaloSegundos = intervalo != null ? intervalo : INTERVALO_PADRAO_SEGUNDOS;
+        int intervaloSegundos = intervalo != null ? intervalo : intervaloPadraoSegundos;
         List<Transacao> transacoes = transacaoService.buscarTransacoes(intervaloSegundos);
         if (transacoes.isEmpty()) {
             return EstatisticaDTO.vazio();
