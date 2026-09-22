@@ -75,12 +75,19 @@ public class EstatisticaServiceTest {
         @DisplayName("deve usar o intervalo padrão quando não informado")
         void deveUsarIntervaloPadraoQuandoNaoInformado() {
             // Arrange
+            Transacao transacao1 = new Transacao(10.0, agora);
+            Transacao transacao2 = new Transacao(30.0, agora);
             when(transacaoService.buscarTransacoes(INTERVALO_PADRAO_SEGUNDOS))
-                    .thenReturn(List.of());
+                    .thenReturn(List.of(transacao1, transacao2));
             // Act
-            estatisticaService.calcularEstatisticas(null);
+            EstatisticaDTO resultado = estatisticaService.calcularEstatisticas(null);
             // Assert
             verify(transacaoService).buscarTransacoes(INTERVALO_PADRAO_SEGUNDOS);
+            assertEquals(2, resultado.count());
+            assertEquals(40.0, resultado.sum());
+            assertEquals(40.0 / 2, resultado.avg());
+            assertEquals(10.0, resultado.min());
+            assertEquals(30.0, resultado.max());
         }
     }
 
