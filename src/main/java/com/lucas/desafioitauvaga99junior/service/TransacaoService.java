@@ -4,16 +4,23 @@ import com.lucas.desafioitauvaga99junior.dto.TransacaoDTO;
 import com.lucas.desafioitauvaga99junior.entity.Transacao;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 public class TransacaoService {
+    private final Clock clock;
+
+    public TransacaoService(Clock clock) {
+        this.clock = clock;
+    }
+
     private final List<Transacao> transacoes = new CopyOnWriteArrayList<>();
 
     public List<Transacao> buscarTransacoes(Integer intervaloSegundos) {
-        OffsetDateTime limite = OffsetDateTime.now().minusSeconds(intervaloSegundos);
+        OffsetDateTime limite = OffsetDateTime.now(clock).minusSeconds(intervaloSegundos);
         return transacoes.stream()
                 .filter(t -> t.getDataHora().isAfter(limite))
                 .toList();

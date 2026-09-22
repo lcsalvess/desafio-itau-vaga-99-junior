@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -16,11 +17,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class TransacaoServiceTest {
     private TransacaoService transacaoService;
     private OffsetDateTime agora;
+    private Clock clock;
 
     @BeforeEach
     void setUp() {
-        transacaoService = new TransacaoService();
-        agora = OffsetDateTime.now();
+        agora = OffsetDateTime.parse("2026-09-22T18:00:00-03:00");
+        clock = Clock.fixed(agora.toInstant(), agora.getOffset());
+        transacaoService = new TransacaoService(clock);
     }
 
     @Nested
@@ -86,6 +89,19 @@ public class TransacaoServiceTest {
             List<Transacao> transacoes = transacaoService.buscarTransacoes(60);
             // Assert
             assertTrue(transacoes.isEmpty());
+        }
+
+        @Test
+        @DisplayName("não deve retornar transação exatamente no limite do intervalo")
+        void naoDeveRetornarTransacaoNoLimiteDoIntervalo() {
+            criarTransacao(
+                    50.0,
+                    agora.minusSeconds(60)
+            );
+            // Act
+            List<Transacao> transacoes = transacaoService.buscarTransacoes(60);
+            // Assert
+            assertEquals(0, transacoes.size());
         }
     }
 
