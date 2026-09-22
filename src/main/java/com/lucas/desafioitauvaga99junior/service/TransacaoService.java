@@ -1,7 +1,7 @@
 package com.lucas.desafioitauvaga99junior.service;
 
 import com.lucas.desafioitauvaga99junior.dto.TransacaoDTO;
-import com.lucas.desafioitauvaga99junior.entity.Transacao;
+import com.lucas.desafioitauvaga99junior.model.Transacao;
 import org.springframework.stereotype.Service;
 
 import java.time.Clock;

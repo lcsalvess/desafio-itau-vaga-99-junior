@@ -1,7 +1,7 @@
 package com.lucas.desafioitauvaga99junior.service;
 
 import com.lucas.desafioitauvaga99junior.dto.EstatisticaDTO;
-import com.lucas.desafioitauvaga99junior.entity.Transacao;
+import com.lucas.desafioitauvaga99junior.model.Transacao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

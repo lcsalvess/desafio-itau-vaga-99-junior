@@ -1,4 +1,4 @@
-package com.lucas.desafioitauvaga99junior.entity;
+package com.lucas.desafioitauvaga99junior.model;
 
 import java.time.OffsetDateTime;
 
