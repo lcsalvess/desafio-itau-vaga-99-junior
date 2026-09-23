@@ -1,131 +1,363 @@
-# Itaú Unibanco - Desafio de Programação
+# API de Transações e Estatísticas
 
-Este é um desafio bacana tanto de desenvolvimento de software quanto de engenharia de software. Queremos testar sua capacidade de construir um software com várias partes diferentes funcionando em conjunto!
+API REST desenvolvida em Java e Spring Boot como exercício prático de desenvolvimento de APIs, testes automatizados, tratamento de erros, observabilidade e documentação.
 
-## 1. Introdução
+O projeto foi baseado no desafio técnico do Itaú Unibanco, mas esta implementação foi desenvolvida **exclusivamente como projeto de estudo**, com foco no aprendizado e na aplicação de boas práticas de desenvolvimento backend.
 
-Sua missão, caso você aceite, é criar uma API REST que recebe Transações e retorna Estatísticas sob essas transações. Para este desafio, a API deve ser criada utilizando-se de Java ou [Kotlin](https://kotlinlang.org/) e Spring Boot.
+## 1. Tecnologias
 
-Um bom lugar para se começar é o [Spring Starter](https://start.spring.io/).
+- Java 21
+- Spring Boot 4.1.1
+- Spring Web MVC
+- Spring Validation
+- Spring Boot Actuator
+- Springdoc OpenAPI
+- Swagger UI
+- Maven
+- JUnit
+- Mockito
 
->**Dica:** Não existe uma forma certa ou errada de resolver o desafio! Vamos avaliar coisas como a qualidade do seu código, o quão fácil é de compreender o código, organização do projeto, quantidade e qualidade dos testes, preocupação com segurança e vários outros fatores :)
+## 2. Características
 
-## 2. Definição do desafio
+- API REST
+- Armazenamento das transações **em memória**
+- Cálculo de estatísticas por intervalo de tempo
+- Intervalo padrão configurável
+- Testes automatizados
+- Logs da aplicação
+- Healthcheck e métricas com Spring Boot Actuator
+- Documentação da API com OpenAPI/Swagger
+- Tratamento global de erros
 
-Neste desafio você deve **criar uma API REST** no [GitHub](https://github.com/) ou [GitLab](https://gitlab.com/). **Leia com atenção todas as instruções a seguir!**
+## 3. Requisitos
 
-### 2.1. Restrições Técnicas
+Para executar o projeto, é necessário ter instalado:
 
-Seu projeto:
+- Java 21
+- Git
 
-- **DEVE** estar no [GitHub](https://github.com/) ou [GitLab](https://gitlab.com/)
-- **NÃO DEVE** fazer _fork_ de nenhum outro projeto
-- **DEVE** ter pelo menos 1 commit por cada endpoint (mínimo de 3 commits)
-  - Queremos ver a evolução do seu projeto com o tempo ;)
-- Todos os commits **DEVEM** ser feitos pelo mesmo usuário que criou o projeto
-  - Entendemos que algumas pessoas tem usuários pessoais e profissionais, ou um usuário diferente usado para estudar. Atenção com isso se você for uma dessas pessoas!
-- **DEVE** seguir exatamente os _endpoints_ descritos a seguir
-  - Por exemplo, `/transacao` não é a mesma coisa que `/transacoes`
-- **DEVE** aceitar e responder com objetos exatamente como descritos a seguir
-  - Por exemplo, `dataHora` não é a mesma coisa que `data-hora` ou `dtTransacao`
-- **NÃO DEVE** utilizar quaisquer sistemas de banco de dados (como H2, MySQL, PostgreSQL, ...) ou cache (como Redis, Memcached, Infinispan, ...)
-- **DEVE** armazenar todos os dados **em memória**
-- **DEVE** aceitar e responder apenas com [JSON](https://www.json.org/json-pt.html)
+O projeto utiliza o Maven Wrapper, portanto não é necessário instalar o Maven separadamente.
 
->**Atenção!** Por motivos de segurança, não podemos aceitar projetos enviados como arquivos. Você **DEVE** disponibilizar seu projeto publicamente para que possamos acessá-lo e corrigi-lo! Após receber uma resposta de nós, sinta-se livre para tornar seu projeto **privado** :)
+## 4. Como executar
 
-### 2.2. Endpoints da API
+Clone o repositório:
 
-A seguir serão especificados os endpoints que devem estar presentes na sua API e a funcionalidade esperada de cada um deles.
+```bash
+git clone https://github.com/lcsalvess/desafio-itau-vaga-99-junior.git
+```
 
-#### 2.2.1. Receber Transações: `POST /transacao`
+Entre no diretório:
 
-Este é o endpoint que irá receber as Transações. Cada transação consiste de um `valor` e uma `dataHora` de quando ela aconteceu:
+```bash
+cd desafio-itau-vaga-99-junior
+```
+
+Execute a aplicação:
+
+**Windows**
+```bash
+.\mvnw.cmd spring-boot:run
+```
+
+**Linux/macOS**
+```bash
+./mvnw spring-boot:run
+```
+
+A aplicação será iniciada por padrão em:
+
+```
+http://localhost:8080
+```
+
+## 5. Testes
+
+Para executar todos os testes:
+
+**Windows**
+```bash
+.\mvnw.cmd test
+```
+
+**Linux/macOS**
+```bash
+./mvnw test
+```
+
+Os testes abrangem diferentes camadas da aplicação, incluindo:
+
+- Regras de negócio
+- Validação das transações
+- Cálculo das estatísticas
+- Controle do intervalo de tempo
+- Controllers
+- Tratamento de requisições inválidas
+- Comportamentos de sucesso e erro
+
+## 6. Endpoints
+
+### Criar uma transação
+
+`POST /transacao`
+
+Cria uma nova transação e a armazena em memória.
+
+Exemplo de requisição:
 
 ```json
 {
-    "valor": 123.45,
-    "dataHora": "2020-08-07T12:34:56.789-03:00"
+  "valor": 150.50,
+  "dataHora": "2026-09-22T19:30:00-03:00"
 }
 ```
 
-Os campos no JSON acima significam o seguinte:
+Respostas:
 
-| Campo      | Significado                                                   | Obrigatório? |
-|------------|---------------------------------------------------------------|--------------|
-| `valor`    | **Valor em decimal com ponto flutuante** da transação         | Sim          |
-| `dataHora` | **Data/Hora no padrão ISO 8601** em que a transação aconteceu | Sim          |
+| Status | Descrição |
+|---|---|
+| 201 Created | Transação criada com sucesso |
+| 422 Unprocessable Entity | Dados da transação inválidos |
+| 400 Bad Request | JSON inválido |
 
->**Dica:** O Spring Boot, por padrão, consegue compreender datas no padrão ISO 8601 sem problemas. Experimente utilizar um atributo do tipo `OffsetDateTime`!
+A transação deve:
 
-A API só aceitará transações que:
+- possuir `valor` e `dataHora`;
+- possuir `valor` maior ou igual a 0;
+- possuir uma data/hora que não esteja no futuro.
 
-1. Tenham os campos `valor` e `dataHora` preenchidos
-2. A transação **NÃO DEVE** acontecer no futuro
-3. A transação **DEVE** ter acontecido a qualquer momento no passado
-4. A transação **NÃO DEVE** ter valor negativo
-5. A transação **DEVE** ter valor igual ou maior que `0` (zero)
+### Excluir todas as transações
 
-Como resposta, espera-se que este endpoint responda com:
+`DELETE /transacao`
 
-- `201 Created` sem nenhum corpo
-  - A transação foi aceita (ou seja foi validada, está válida e foi registrada)
-- `422 Unprocessable Entity` sem nenhum corpo
-  - A transação **não** foi aceita por qualquer motivo (1 ou mais dos critérios de aceite não foram atendidos - por exemplo: uma transação com valor menor que `0`)
-- `400 Bad Request` sem nenhum corpo
-  - A API não compreendeu a requisição do cliente (por exemplo: um JSON inválido)
+Remove todas as transações armazenadas em memória.
 
-#### 2.2.2. Limpar Transações: `DELETE /transacao`
+Resposta:
 
-Este endpoint simplesmente **apaga todos os dados de transações** que estejam armazenados.
+| Status | Descrição |
+|---|---|
+| 200 OK | Transações excluídas com sucesso |
 
-Como resposta, espera-se que este endpoint responda com:
+### Consultar estatísticas
 
-- `200 OK` sem nenhum corpo
-  - Todas as informações foram apagadas com sucesso
+`GET /estatistica`
 
-#### 2.2.3. Calcular Estatísticas: `GET /estatistica`
+Retorna estatísticas das transações realizadas dentro do intervalo informado.
 
-Este endpoint deve retornar estatísticas das transações que **aconteceram nos últimos 60 segundos (1 minuto)**. As estatísticas que devem ser calculadas são:
+Sem informar o parâmetro `intervalo`, é utilizado o valor configurado como padrão.
+
+Exemplo:
+
+```
+GET /estatistica
+```
+
+Também é possível informar um intervalo personalizado:
+
+```
+GET /estatistica?intervalo=120
+```
+
+Resposta:
 
 ```json
 {
-    "count": 10,
-    "sum": 1234.56,
-    "avg": 123.456,
-    "min": 12.34,
-    "max": 123.56
+  "count": 5,
+  "sum": 750.0,
+  "avg": 150.0,
+  "min": 50.0,
+  "max": 300.0
 }
 ```
 
-Os campos no JSON acima significam o seguinte:
+Quando não existem transações dentro do intervalo:
 
-|  Campo  | Significado                                                   | Obrigatório? |
-|---------|---------------------------------------------------------------|--------------|
-| `count` | **Quantidade de transações** nos últimos 60 segundos          | Sim          |
-| `sum`   | **Soma total do valor** transacionado nos últimos 60 segundos | Sim          |
-| `avg`   | **Média do valor** transacionado nos últimos 60 segundos      | Sim          |
-| `min`   | **Menor valor** transacionado nos últimos 60 segundos         | Sim          |
-| `max`   | **Maior valor** transacionado nos últimos 60 segundos         | Sim          |
+```json
+{
+  "count": 0,
+  "sum": 0.0,
+  "avg": 0.0,
+  "min": 0.0,
+  "max": 0.0
+}
+```
 
->**Dica:** Há um objeto no Java 8+ chamado `DoubleSummaryStatistics` que pode lhe ajudar ou servir de inspiração.
+## 7. Documentação da API
 
-Como resposta, espera-se que este endpoint responda com:
+A API possui documentação interativa utilizando OpenAPI e Swagger UI.
 
-- `200 OK` com os dados das estatísticas
-  - Um JSON com os campos `count`, `sum`, `avg`, `min` e `max` todos preenchidos com seus respectivos valores
-  - **Atenção!** Quando não houverem transações nos últimos 60 segundos considere todos os valores como `0` (zero)
+Com a aplicação em execução, acesse:
 
-## 4. Extras
+```
+http://localhost:8080/swagger-ui/index.html
+```
 
-Vamos propôr a seguir alguns desafios extras caso você queira testar seus conhecimentos ao máximo! Nenhum desses requisitos é obrigatório, mas são desejados e podem ser um diferencial!
+A especificação OpenAPI também pode ser consultada em:
 
-1. **Testes automatizados:** Sejam unitários e/ou funcionais, testes automatizados são importantes e ajudam a evitar problemas no futuro. Se você fizer testes automatizados, atente-se na efetividade dos seus testes! Por exemplo, testar apenas os "caminhos felizes" não é muito efetivo.
-2. **Containerização:** Você consegue criar meios para disponibilizar sua aplicação como um container? _OBS: Não é necessário publicar o container da sua aplicação!_
-3. **Logs:** Sua aplicação informa o que está acontecendo enquanto ela trabalha? Isso é útil para ajudar as pessoas desenvolvedoras a solucionar eventuais problemas que possam ocorrer.
-4. **Observabilidade:** Sua API tem algum endpoint para verificação da saúde da aplicação (healthcheck)?
-5. **Performance:** Você consegue estimar quanto tempo sua aplicação gasta para calcular as estatísticas?
-6. **Tratamento de Erros:** O Spring Boot dá às pessoas desenvolvedoras ferramentas para se melhorar o tratamento de erros padrão. Você consegue alterar os erros padrão para retornar _quais_ erros ocorreram?
-7. **Documentação da API:** Você consegue documentar sua API? Existem [ferramentas](https://swagger.io/) e [padrões](http://raml.org/) que podem te ajudar com isso!
-8. **Documentação do Sistema:** Sua aplicação provavelmente precisa ser construída antes de ser executada. Você consegue documentar como outra pessoa que pegou sua aplicação pela primeira vez pode construir e executar sua aplicação?
-9. **Configurações:** Você consegue deixar sua aplicação configurável em relação a quantidade de segundos para calcular as estatísticas? Por exemplo: o padrão é 60 segundos, mas e se o usuário quiser 120 segundos?
+```
+http://localhost:8080/v3/api-docs
+```
+
+A documentação apresenta:
+
+- endpoints disponíveis;
+- parâmetros;
+- códigos de resposta;
+- exemplos de requisição;
+- exemplos de resposta;
+- descrição dos campos dos DTOs;
+- tipos e regras de validação dos dados.
+
+## 8. Observabilidade
+
+A aplicação utiliza Spring Boot Actuator para disponibilizar informações de saúde e métricas.
+
+### Healthcheck
+
+```
+GET /actuator/health
+```
+
+Exemplo de resposta:
+
+```json
+{
+  "status": "UP"
+}
+```
+
+### Métricas disponíveis
+
+```
+GET /actuator/metrics
+```
+
+A aplicação também disponibiliza métricas relacionadas às requisições HTTP, JVM, sistema e aplicação.
+
+Por exemplo:
+
+```
+GET /actuator/metrics/http.server.requests
+```
+
+É possível filtrar as métricas por endpoint e método HTTP utilizando as tags disponibilizadas pelo Actuator.
+
+## 9. Configuração
+
+O intervalo padrão utilizado para calcular as estatísticas pode ser configurado no arquivo:
+
+```
+src/main/resources/application.properties
+```
+
+Configuração padrão:
+
+```properties
+estatistica.intervalo-padrao-segundos=60
+```
+
+Por exemplo, para utilizar 120 segundos como intervalo padrão:
+
+```properties
+estatistica.intervalo-padrao-segundos=120
+```
+
+Também é possível sobrescrever o intervalo diretamente na requisição através do parâmetro `intervalo`.
+
+## 10. Logs
+
+A aplicação utiliza o sistema de logging do Spring Boot para registrar eventos relevantes da aplicação.
+
+Entre os eventos registrados estão:
+
+- criação de transações;
+- exclusão de transações;
+- cálculo de estatísticas.
+
+O nível de log da aplicação pode ser configurado em:
+
+```properties
+logging.level.com.lucas.desafioitauvaga99junior=INFO
+```
+
+## 11. Arquitetura
+
+O projeto utiliza uma separação simples entre controllers, services e DTOs.
+
+```
+src
+└── main
+    ├── java
+    │   └── com.lucas.desafioitauvaga99junior
+    │       ├── controller
+    │       ├── dto
+    │       ├── exception
+    │       ├── model
+    │       ├── service
+    │       └── config
+    │
+    └── resources
+        └── application.properties
+```
+
+**Controller**
+Responsável por receber as requisições HTTP e retornar as respostas da API.
+
+**Service**
+Responsável pelas regras de negócio, como armazenamento das transações e cálculo das estatísticas.
+
+**DTO**
+Define o formato dos dados recebidos e retornados pela API.
+
+**Exception**
+Centraliza o tratamento das exceções relacionadas às requisições.
+
+**Config**
+Contém configurações utilizadas pela aplicação, incluindo a fonte de tempo utilizada pelo sistema.
+
+## 12. Controle de tempo
+
+A aplicação utiliza `java.time` e `Clock` para controlar a obtenção do horário atual.
+
+Essa abordagem permite que a aplicação utilize o horário real em produção e um horário controlado durante os testes.
+
+Isso torna os testes relacionados ao intervalo de tempo mais previsíveis e determinísticos.
+
+## 13. Armazenamento
+
+As transações são armazenadas exclusivamente em memória, conforme a proposta original do desafio.
+
+Não é utilizado banco de dados ou sistema de cache.
+
+As transações são perdidas quando a aplicação é encerrada.
+
+## 14. Melhorias implementadas
+
+Além dos requisitos básicos da API, o projeto possui algumas funcionalidades adicionais:
+
+- testes automatizados;
+- logs estruturados dos principais eventos;
+- healthcheck;
+- métricas com Actuator;
+- documentação OpenAPI;
+- Swagger UI;
+- intervalo de estatísticas configurável;
+- tratamento global de erros;
+- utilização de `Clock` para facilitar testes de tempo;
+- validação dos dados recebidos pela API.
+
+## 15. Status do projeto
+
+Projeto desenvolvido como exercício prático de backend com Java e Spring Boot.
+
+O objetivo principal é praticar conceitos de:
+
+- desenvolvimento de APIs REST;
+- Spring Boot;
+- validação;
+- testes automatizados;
+- tratamento de exceções;
+- observabilidade;
+- documentação de APIs;
+- configuração de aplicações;
+- manipulação de data e hora;
+- organização de código backend.
