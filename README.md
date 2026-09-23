@@ -2,7 +2,7 @@
 
 API REST desenvolvida em Java e Spring Boot como exercício prático de desenvolvimento de APIs, testes automatizados, tratamento de erros, observabilidade e documentação.
 
-O projeto foi baseado no desafio técnico do Itaú Unibanco, mas esta implementação foi desenvolvida **exclusivamente como projeto de estudo**, com foco no aprendizado e na aplicação de boas práticas de desenvolvimento backend.
+O projeto foi baseado no [desafio técnico do Itaú Unibanco](https://github.com/rafaellins-itau/desafio-itau-vaga-99-junior), mas esta implementação foi desenvolvida **exclusivamente como projeto de estudo**, com foco no aprendizado e na aplicação de boas práticas de desenvolvimento backend.
 
 ## 1. Tecnologias
 
