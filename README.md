@@ -43,13 +43,13 @@ O projeto utiliza o Maven Wrapper, portanto não é necessário instalar o Maven
 Clone o repositório:
 
 ```bash
-git clone https://github.com/lcsalvess/desafio-itau-vaga-99-junior.git
+git clone https://github.com/lcsalvess/transaction-statistics-api.git
 ```
 
 Entre no diretório:
 
 ```bash
-cd desafio-itau-vaga-99-junior
+cd transaction-statistics-api
 ```
 
 Execute a aplicação:
@@ -276,7 +276,7 @@ Entre os eventos registrados estão:
 O nível de log da aplicação pode ser configurado em:
 
 ```properties
-logging.level.com.lucas.desafioitauvaga99junior=INFO
+logging.level.com.lucas.transactionstatistics=INFO
 ```
 
 ## 11. Arquitetura
@@ -287,7 +287,7 @@ O projeto utiliza uma separação simples entre controllers, services e DTOs.
 src
 └── main
     ├── java
-    │   └── com.lucas.desafioitauvaga99junior
+    │   └── com.lucas.transactionstatistics
     │       ├── controller
     │       ├── dto
     │       ├── exception
@@ -335,7 +335,7 @@ As transações são perdidas quando a aplicação é encerrada.
 Além dos requisitos básicos da API, o projeto possui algumas funcionalidades adicionais:
 
 - testes automatizados;
-- logs estruturados dos principais eventos;
+- logs dos principais eventos da aplicação;
 - healthcheck;
 - métricas com Actuator;
 - documentação OpenAPI;

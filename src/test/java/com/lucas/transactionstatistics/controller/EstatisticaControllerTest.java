@@ -1,7 +1,7 @@
-package com.lucas.desafioitauvaga99junior.controller;
+package com.lucas.transactionstatistics.controller;
 
-import com.lucas.desafioitauvaga99junior.dto.EstatisticaDTO;
-import com.lucas.desafioitauvaga99junior.service.EstatisticaService;
+import com.lucas.transactionstatistics.dto.EstatisticaDTO;
+import com.lucas.transactionstatistics.service.EstatisticaService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.lucas.desafioitauvaga99junior.exception;
+package com.lucas.transactionstatistics.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;

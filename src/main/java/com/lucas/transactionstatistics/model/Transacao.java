@@ -1,4 +1,4 @@
-package com.lucas.desafioitauvaga99junior.model;
+package com.lucas.transactionstatistics.model;
 
 import java.time.OffsetDateTime;
 

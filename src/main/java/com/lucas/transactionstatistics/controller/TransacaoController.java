@@ -1,7 +1,7 @@
-package com.lucas.desafioitauvaga99junior.controller;
+package com.lucas.transactionstatistics.controller;
 
-import com.lucas.desafioitauvaga99junior.dto.TransacaoDTO;
-import com.lucas.desafioitauvaga99junior.service.TransacaoService;
+import com.lucas.transactionstatistics.dto.TransacaoDTO;
+import com.lucas.transactionstatistics.service.TransacaoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

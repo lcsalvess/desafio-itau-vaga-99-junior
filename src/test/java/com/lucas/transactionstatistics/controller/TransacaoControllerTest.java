@@ -1,7 +1,7 @@
-package com.lucas.desafioitauvaga99junior.controller;
+package com.lucas.transactionstatistics.controller;
 
-import com.lucas.desafioitauvaga99junior.dto.TransacaoDTO;
-import com.lucas.desafioitauvaga99junior.service.TransacaoService;
+import com.lucas.transactionstatistics.dto.TransacaoDTO;
+import com.lucas.transactionstatistics.service.TransacaoService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -81,7 +81,7 @@ public class TransacaoControllerTest {
                             .content("""
                                     {
                                     "valor": 80.0,
-                                    "dataHora": "2026-09-22T19:00:00-03:00"
+                                    "dataHora": "2026-10-22T19:00:00-03:00"
                                     }
                                     """))
                     // Assert

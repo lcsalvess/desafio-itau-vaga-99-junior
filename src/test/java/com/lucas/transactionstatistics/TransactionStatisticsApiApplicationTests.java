@@ -1,10 +1,10 @@
-package com.lucas.desafioitauvaga99junior;
+package com.lucas.transactionstatistics;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DesafioItauVaga99JuniorApplicationTests {
+class TransactionStatisticsApiApplicationTests {
 
     @Test
     void contextLoads() {

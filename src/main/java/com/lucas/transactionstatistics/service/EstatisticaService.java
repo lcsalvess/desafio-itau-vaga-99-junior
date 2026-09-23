@@ -1,7 +1,7 @@
-package com.lucas.desafioitauvaga99junior.service;
+package com.lucas.transactionstatistics.service;
 
-import com.lucas.desafioitauvaga99junior.dto.EstatisticaDTO;
-import com.lucas.desafioitauvaga99junior.model.Transacao;
+import com.lucas.transactionstatistics.dto.EstatisticaDTO;
+import com.lucas.transactionstatistics.model.Transacao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

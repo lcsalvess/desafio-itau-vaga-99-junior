@@ -1,4 +1,4 @@
-package com.lucas.desafioitauvaga99junior.dto;
+package com.lucas.transactionstatistics.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

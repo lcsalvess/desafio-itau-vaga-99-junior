@@ -1,4 +1,4 @@
-package com.lucas.desafioitauvaga99junior.config;
+package com.lucas.transactionstatistics.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
